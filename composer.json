@@ -13,9 +13,9 @@
   "require": {
     "php": ">=7.0.0",
     "ext-curl": "*",
-    "guzzlehttp/guzzle": "^6.2",
+    "psr/log": "~1.0",
     "ramsey/uuid": "^3.0",
-    "monolog/monolog": "^1.22",
+    "guzzlehttp/guzzle": "^6.2",
     "fig/http-message-util": "^1.1"
   },
   "require-dev": {
@@ -26,7 +26,8 @@
     "sebastian/phpcpd": "*",
     "phploc/phploc": "*",
     "pdepend/pdepend" : "^2.2.4",
-    "sensiolabs/security-checker": "^4.0.0"
+    "sensiolabs/security-checker": "^4.0.0",
+    "monolog/monolog": "^1.22"
   },
   "autoload": {
     "psr-4": {
@@ -38,5 +39,13 @@
       "tests/MockClientTrait.php",
       "tests/TestReflectionTrait.php"
     ]
+  },
+  "scripts": {
+    "ci": [
+      "./vendor/bin/phpunit",
+      "./vendor/bin/phpcpd src/",
+      "./vendor/bin/phploc src/ --log-xml=tests/build/phploc.xml"
+    ],
+    "phpcs": "./vendor/bin/phpcs src/ --report-full --report-source --standard=PSR2 --colors"
   }
 }

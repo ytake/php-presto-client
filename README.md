@@ -1,5 +1,16 @@
 # Ytake\PrestoClient
 
+[![Build Status](http://img.shields.io/travis/ytake/php-presto-client/master.svg?style=flat-square)](https://travis-ci.org/ytake/php-presto-client)
+[![Coverage Status](http://img.shields.io/coveralls/ytake/php-presto-client/master.svg?style=flat-square)](https://coveralls.io/r/ytake/php-presto-client?branch=master)
+[![Scrutinizer Code Quality](http://img.shields.io/scrutinizer/g/ytake/php-presto-client.svg?style=flat-square)](https://scrutinizer-ci.com/g/ytake/php-presto-client/?branch=master)
+
+[![License](http://img.shields.io/packagist/l/ytake/php-presto-client.svg?style=flat-square)](https://packagist.org/packages/ytake/php-presto-client)
+[![Latest Version](http://img.shields.io/packagist/v/ytake/php-presto-client.svg?style=flat-square)](https://packagist.org/packages/ytake/php-presto-client)
+[![Total Downloads](http://img.shields.io/packagist/dt/ytake/php-presto-client.svg?style=flat-square)](https://packagist.org/packages/ytake/php-presto-client)
+[![StyleCI](https://styleci.io/repos/94699825/shield?branch=master)](https://styleci.io/repos/94699825)
+
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/9a13a5c0-7588-459f-835e-d73dabd22843/mini.png)](https://insight.sensiolabs.com/projects/9a13a5c0-7588-459f-835e-d73dabd22843)
+
 prestodb http protocol client for php 
 
 [prestodb](https://prestodb.io/)
