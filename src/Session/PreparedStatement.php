@@ -24,5 +24,4 @@ namespace Ytake\PrestoClient\Session;
  */
 final class PreparedStatement extends AbstractKeyValueStorage
 {
-
 }

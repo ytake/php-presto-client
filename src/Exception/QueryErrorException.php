@@ -24,5 +24,4 @@ namespace Ytake\PrestoClient\Exception;
  */
 final class QueryErrorException extends \Exception
 {
-
 }
