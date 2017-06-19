@@ -1,10 +1,26 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 namespace Ytake\PrestoClient;
 
 /**
  * Class StatementStats
+ *
+ * @author Yuuki Takezawa <yuuki.takezawa@comnect.jp.net>
  */
 final class StatementStats
 {
@@ -74,7 +90,8 @@ final class StatementStats
      */
     public function __construct(\stdClass $jsonContent)
     {
-        foreach ($jsonContent as $element => $value) {
+        $arrayContent = (array)$jsonContent;
+        foreach ($arrayContent as $element => $value) {
             if (property_exists($this, $element)) {
                 if (isset($this->primitiveCasts[$element])) {
                     $castFunction = $this->primitiveCasts[$element];

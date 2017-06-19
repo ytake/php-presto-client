@@ -1,6 +1,20 @@
 <?php
 declare(strict_types=1);
 
+/**
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+ * OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+ * SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+ * LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+ * DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+ * THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+ * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+ * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ */
+
 namespace Ytake\PrestoClient;
 
 use Fig\Http\Message\StatusCodeInterface;
@@ -19,6 +33,8 @@ use Ytake\PrestoClient\Session\Property;
 
 /**
  * Class StatementClient
+ *
+ * @author Yuuki Takezawa <yuuki.takezawa@comnect.jp.net>
  */
 class StatementClient
 {
@@ -88,7 +104,8 @@ class StatementClient
      */
     protected function buildQueryRequest(Request $request): Request
     {
-        $transactionId = is_null($this->session->getTransactionId()) ? 'NONE' : $this->session->getTransactionId()->toString();
+        $sessionTransaction = $this->session->getTransactionId();
+        $transactionId = is_null($sessionTransaction) ? 'NONE' : $sessionTransaction->toString();
         $request = $request->withAddedHeader(PrestoHeaders::PRESTO_CATALOG, $this->session->getCatalog())
             ->withAddedHeader(PrestoHeaders::PRESTO_SCHEMA, $this->session->getSchema())
             ->withAddedHeader(PrestoHeaders::PRESTO_SOURCE, $this->session->getSource())
@@ -109,7 +126,8 @@ class StatementClient
         if (count($preparedStatements)) {
             $statements = [];
             foreach ($preparedStatements as $preparedStatement) {
-                $statements[] = urlencode($preparedStatement->getKey()) . '=' . urlencode($preparedStatement->getValue());
+                $statements[] = urlencode($preparedStatement->getKey())
+                    . '=' . urlencode($preparedStatement->getValue());
             }
             $request = $request->withAddedHeader(
                 PrestoHeaders::PRESTO_PREPARED_STATEMENT,
@@ -245,7 +263,7 @@ class StatementClient
      */
     public function isFailed(): bool
     {
-        return $this->queryResult->getError() != null;
+        return $this->queryResult->getError() !== null;
     }
 
     /**
@@ -286,21 +304,33 @@ class StatementClient
     }
 
     /**
-     * @param string            $message
-     * @param string            $uri
-     * @param ResponseInterface $response
+     * @param string                 $message
+     * @param string                 $uri
+     * @param ResponseInterface|null $response
      *
      * @return RequestFailedException
      */
     private function requestFailedException(
         string $message,
         string $uri,
-        ResponseInterface $response
+        ResponseInterface $response = null
     ): RequestFailedException {
         $this->gone = true;
-        if (!$response->getBody()->getSize()) {
+        if ($response) {
+            if (!$response->getBody()->getSize()) {
+                return new RequestFailedException(
+                    sprintf(
+                        "Error %s at %s returned an invalid response: %s [Error: %s]",
+                        $message,
+                        $uri,
+                        $response->getStatusCode(),
+                        $response->getBody()->getContents()
+                    )
+                );
+            }
             return new RequestFailedException(
-                sprintf("Error %s at %s returned an invalid response: %s [Error: %s]",
+                sprintf(
+                    "Error %s at %s returned %s: %s",
                     $message,
                     $uri,
                     $response->getStatusCode(),
@@ -309,13 +339,6 @@ class StatementClient
             );
         }
 
-        return new RequestFailedException(
-            sprintf("Error %s at %s returned %s: %s",
-                $message,
-                $uri,
-                $response->getStatusCode(),
-                $response->getBody()->getContents()
-            )
-        );
+        return new RequestFailedException('server error.');
     }
 }
