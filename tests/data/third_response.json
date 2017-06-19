@@ -1,0 +1,66 @@
+{
+  "id": "20170618_154732_00069_3ytfr",
+  "infoUri": "http://localhost:8080/query.html?20170618_154732_00069_3ytfr",
+  "partialCancelUri": "http://localhost:8080/v1/stage/20170618_154732_00069_3ytfr.1",
+  "nextUri": "http://localhost:8080/v1/statement/20170618_154732_00069_3ytfr/3",
+  "columns": [
+    {
+      "name": "test_id",
+      "type": "integer",
+      "typeSignature": {
+        "rawType": "integer",
+        "typeArguments": [],
+        "literalArguments": [],
+        "arguments": []
+      }
+    }
+  ],
+  "stats": {
+    "state": "RUNNING",
+    "queued": false,
+    "scheduled": false,
+    "nodes": 1,
+    "totalSplits": 0,
+    "queuedSplits": 0,
+    "runningSplits": 0,
+    "completedSplits": 0,
+    "userTimeMillis": 0,
+    "cpuTimeMillis": 0,
+    "wallTimeMillis": 0,
+    "processedRows": 0,
+    "processedBytes": 0,
+    "rootStage": {
+      "stageId": "0",
+      "state": "SCHEDULING",
+      "done": false,
+      "nodes": 1,
+      "totalSplits": 0,
+      "queuedSplits": 0,
+      "runningSplits": 0,
+      "completedSplits": 0,
+      "userTimeMillis": 0,
+      "cpuTimeMillis": 0,
+      "wallTimeMillis": 0,
+      "processedRows": 0,
+      "processedBytes": 0,
+      "subStages": [
+        {
+          "stageId": "1",
+          "state": "SCHEDULED",
+          "done": false,
+          "nodes": 1,
+          "totalSplits": 0,
+          "queuedSplits": 0,
+          "runningSplits": 0,
+          "completedSplits": 0,
+          "userTimeMillis": 0,
+          "cpuTimeMillis": 0,
+          "wallTimeMillis": 0,
+          "processedRows": 0,
+          "processedBytes": 0,
+          "subStages": []
+        }
+      ]
+    }
+  }
+}

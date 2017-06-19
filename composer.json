@@ -1,0 +1,42 @@
+{
+  "name": "ytake/php-presto-client",
+  "description": "php prestodb client",
+  "minimum-stability": "stable",
+  "keywords": ["prestodb"],
+  "license": "BSD-3-Clause",
+  "authors": [
+    {
+      "name": "yuuki takezawa",
+      "email": "yuuki.takezawa@comnect.jp.net"
+    }
+  ],
+  "require": {
+    "php": ">=7.0.0",
+    "ext-curl": "*",
+    "guzzlehttp/guzzle": "^6.2",
+    "ramsey/uuid": "^3.0",
+    "monolog/monolog": "^1.22",
+    "fig/http-message-util": "^1.1"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~6.0",
+    "satooshi/php-coveralls": "*",
+    "phpmd/phpmd": "@stable",
+    "squizlabs/php_codesniffer": "~2.7",
+    "sebastian/phpcpd": "*",
+    "phploc/phploc": "*",
+    "pdepend/pdepend" : "^2.2.4",
+    "sensiolabs/security-checker": "^4.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Ytake\\PrestoClient\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "files": [
+      "tests/MockClientTrait.php",
+      "tests/TestReflectionTrait.php"
+    ]
+  }
+}

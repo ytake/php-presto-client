@@ -1,0 +1,71 @@
+{
+  "id": "20170618_155510_00077_3ytfr",
+  "infoUri": "http://localhost:8080/query.html?20170618_155510_00077_3ytfr",
+  "partialCancelUri": "http://localhost:8080/v1/stage/20170618_155510_00077_3ytfr.1",
+  "columns": [
+    {
+      "name": "test_id",
+      "type": "integer",
+      "typeSignature": {
+        "rawType": "integer",
+        "typeArguments": [],
+        "literalArguments": [],
+        "arguments": []
+      }
+    }
+  ],
+  "data": [
+    [
+      1
+    ]
+  ],
+  "stats": {
+    "state": "RUNNING",
+    "queued": false,
+    "scheduled": true,
+    "nodes": 1,
+    "totalSplits": 18,
+    "queuedSplits": 16,
+    "runningSplits": 1,
+    "completedSplits": 0,
+    "userTimeMillis": 0,
+    "cpuTimeMillis": 0,
+    "wallTimeMillis": 0,
+    "processedRows": 0,
+    "processedBytes": 0,
+    "rootStage": {
+      "stageId": "0",
+      "state": "RUNNING",
+      "done": false,
+      "nodes": 1,
+      "totalSplits": 17,
+      "queuedSplits": 16,
+      "runningSplits": 0,
+      "completedSplits": 0,
+      "userTimeMillis": 0,
+      "cpuTimeMillis": 0,
+      "wallTimeMillis": 0,
+      "processedRows": 0,
+      "processedBytes": 0,
+      "subStages": [
+        {
+          "stageId": "1",
+          "state": "RUNNING",
+          "done": false,
+          "nodes": 1,
+          "totalSplits": 1,
+          "queuedSplits": 0,
+          "runningSplits": 1,
+          "completedSplits": 0,
+          "userTimeMillis": 0,
+          "cpuTimeMillis": 0,
+          "wallTimeMillis": 0,
+          "processedRows": 0,
+          "processedBytes": 0,
+          "subStages": []
+        }
+      ]
+    },
+    "progressPercentage": 0.0
+  }
+}

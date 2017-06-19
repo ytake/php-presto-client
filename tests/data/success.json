@@ -1,0 +1,20 @@
+{
+  "id": "20170618_151959_00067_3ytfr",
+  "infoUri": "http://localhost:8080/query.html?20170618_151959_00067_3ytfr",
+  "nextUri": "http://localhost:8080/v1/statement/20170618_151959_00067_3ytfr/1",
+  "stats": {
+    "state": "QUEUED",
+    "queued": true,
+    "scheduled": false,
+    "nodes": 0,
+    "totalSplits": 0,
+    "queuedSplits": 0,
+    "runningSplits": 0,
+    "completedSplits": 0,
+    "userTimeMillis": 0,
+    "cpuTimeMillis": 0,
+    "wallTimeMillis": 0,
+    "processedRows": 0,
+    "processedBytes": 0
+  }
+}
