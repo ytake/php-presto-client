@@ -40,7 +40,7 @@ class StatementClientTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($queryResult->getStats());
         $this->assertNull($queryResult->getError());
         $this->assertCount(0, $queryResult->getColumns());
-        $this->assertInstanceOf(\Generator::class, $queryResult->getData());
+        $this->assertInstanceOf(\Generator::class, $queryResult->yieldData());
         $this->assertFalse($client->cancelLeafStage());
         $this->assertFalse($client->isClosed());
         $this->assertFalse($client->advance());
@@ -204,9 +204,9 @@ class StatementClientTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($client->advance());
         $this->assertTrue($client->advance());
         $queryResult = $client->current();
-        $this->assertInstanceOf(\Generator::class, $queryResult->getData());
+        $this->assertInstanceOf(\Generator::class, $queryResult->yieldData());
         /** @var FixData[] $array */
-        $array = iterator_to_array($queryResult->getData());
+        $array = iterator_to_array($queryResult->yieldData());
         $this->assertCount(1, $array);
         $this->assertContainsOnly(FixData::class, $array);
         $this->assertSame(1, $array[0]['test_id']);

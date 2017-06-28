@@ -46,6 +46,7 @@
       "./vendor/bin/phpcpd src/",
       "./vendor/bin/phploc src/ --log-xml=tests/build/phploc.xml"
     ],
-    "phpcs": "./vendor/bin/phpcs src/ --report-full --report-source --standard=PSR2 --colors"
+    "phpcs": "./vendor/bin/phpcs src/ --report-full --report-source --standard=PSR2 --colors",
+    "security-checker": "./vendor/bin/security-checker security:check composer.lock"
   }
 }
