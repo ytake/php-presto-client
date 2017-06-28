@@ -112,15 +112,16 @@ final class QueryResult
     /**
      * @return \Generator
      */
-    public function getData(): \Generator
+    public function yieldData(): \Generator
     {
         if (!count($this->data)) {
             yield;
         }
         $column = $this->getColumns();
+        $columnCount = count($column);
         foreach ($this->data as $data) {
             $fixData = new FixData();
-            for ($i = 0; $i < count($column); $i++) {
+            for ($i = 0; $i < $columnCount; $i++) {
                 $fixData->add($column[$i]->getName(), $data[$i]);
             }
             yield $fixData;

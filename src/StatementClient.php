@@ -49,7 +49,7 @@ class StatementClient
     /** @var QueryResult */
     protected $queryResult;
 
-    /** @var string[] */
+    /** @var array<string, string> */
     protected $headers = [];
 
     /** @var string */
