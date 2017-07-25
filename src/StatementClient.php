@@ -17,15 +17,15 @@ declare(strict_types=1);
 
 namespace Ytake\PrestoClient;
 
-use Fig\Http\Message\StatusCodeInterface;
 use GuzzleHttp\Psr7\Uri;
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\UriNormalizer;
 use GuzzleHttp\Exception\ClientException;
-use Guzzle\Http\Message\RequestInterface;
 use GuzzleHttp\Exception\RequestException;
+use Fig\Http\Message\StatusCodeInterface;
+use Fig\Http\Message\RequestMethodInterface;
 use Psr\Http\Message\ResponseInterface;
 use Ytake\PrestoClient\Exception\QueryErrorException;
 use Ytake\PrestoClient\Exception\RequestFailedException;
@@ -151,7 +151,7 @@ class StatementClient
             new Uri($this->session->getHost() . StatementClient::STATEMENT_URI),
             UriNormalizer::REMOVE_DUPLICATE_SLASHES
         );
-        $request = new Request(RequestInterface::POST, $normalize, $this->headers);
+        $request = new Request(RequestMethodInterface::METHOD_POST, $normalize, $this->headers);
         try {
             $response = $this->client->send($this->buildQueryRequest($request), [
                 'timeout' => $timeout,
@@ -328,6 +328,7 @@ class StatementClient
                     )
                 );
             }
+
             return new RequestFailedException(
                 sprintf(
                     "Error %s at %s returned %s: %s",
