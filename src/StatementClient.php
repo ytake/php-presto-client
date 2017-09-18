@@ -187,31 +187,8 @@ class StatementClient
             return false;
         }
         $this->prepareRequest();
-        $start = microtime(true);
-        $cause = null;
-        $attempts = 0;
-        do {
-            if ($attempts > 0) {
-                usleep($attempts * 100);
-            }
-            $attempts++;
-            try {
-                $response = $this->client->get($nextUri);
-                if ($response->getStatusCode() === StatusCodeInterface::STATUS_OK) {
-                    $this->queryResult->set($response->getBody()->getContents());
 
-                    return true;
-                }
-            } catch (ClientException $e) {
-                $cause = $e;
-                if ($e->getCode() != StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE) {
-                    throw $this->requestFailedException("fetching next", $nextUri, $e->getResponse());
-                }
-            }
-        } while (((microtime(true) - $start) < $this->nanoseconds) && !$this->isClosed());
-
-        $this->gone = true;
-        throw new \RuntimeException('Error fetching next', 0, $cause);
+        return $this->detectResponse($nextUri);
     }
 
     /**
@@ -341,5 +318,39 @@ class StatementClient
         }
 
         return new RequestFailedException('server error.');
+    }
+
+    /**
+     * @param string $nextUri
+     *
+     * @return bool
+     */
+    private function detectResponse(string $nextUri): bool
+    {
+        $start = microtime(true);
+        $cause = null;
+        $attempts = 0;
+        do {
+            if ($attempts > 0) {
+                usleep($attempts * 100);
+            }
+            $attempts++;
+            try {
+                $response = $this->client->get($nextUri);
+                if ($response->getStatusCode() === StatusCodeInterface::STATUS_OK) {
+                    $this->queryResult->set($response->getBody()->getContents());
+
+                    return true;
+                }
+            } catch (ClientException $e) {
+                $cause = $e;
+                if ($e->getCode() != StatusCodeInterface::STATUS_SERVICE_UNAVAILABLE) {
+                    throw $this->requestFailedException("fetching next", $nextUri, $e->getResponse());
+                }
+            }
+        } while (((microtime(true) - $start) < $this->nanoseconds) && !$this->isClosed());
+
+        $this->gone = true;
+        throw new \RuntimeException('Error fetching next', 0, $cause);
     }
 }

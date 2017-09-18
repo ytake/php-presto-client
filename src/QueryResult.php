@@ -129,6 +129,48 @@ final class QueryResult
     }
 
     /**
+     * @return \Generator
+     */
+    public function yieldDataArray(): \Generator
+    {
+        if (!count($this->data)) {
+            yield;
+        }
+        $columns = array_map(function (Column $item) {
+            return $item->getName();
+        }, $this->getColumns());
+        foreach ($this->data as $data) {
+            yield array_combine($columns, $data);
+        }
+    }
+
+    /**
+     * @param string $fetchClassName
+     *
+     * @return \Generator
+     */
+    public function yieldObject(string $fetchClassName)
+    {
+        if (!count($this->data)) {
+            yield;
+        }
+        $column = $this->getColumns();
+        $columnCount = count($column);
+        $reflectionClass = new \ReflectionClass($fetchClassName);
+        $newInstance = $reflectionClass->newInstanceWithoutConstructor();
+        foreach ($this->data as $data) {
+            for ($i = 0; $i < $columnCount; $i++) {
+                if ($reflectionClass->hasProperty($column[$i]->getName())) {
+                    $property = $reflectionClass->getProperty($column[$i]->getName());
+                    $property->setAccessible(true);
+                    $property->setValue($newInstance, $data[$i]);
+                }
+            }
+            yield $newInstance;
+        }
+    }
+
+    /**
      * @param string $content
      *
      * @return \stdClass
