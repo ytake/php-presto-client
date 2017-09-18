@@ -68,3 +68,76 @@ $result = $resultSession->execute()->yieldResults();
 $result = $resultSession->execute()->getResults();
 ```
 
+## Fetch Styles
+
+### FixData Object
+
+```php
+<?php
+
+$client = new \Ytake\PrestoClient\StatementClient(
+    new \Ytake\PrestoClient\ClientSession('http://localhost:8080/', 'acme'),
+    'SELECT * FROM acme.acme.acme'
+);
+$resultSession = new \Ytake\PrestoClient\ResultsSession($client);
+$result = $resultSession->execute()->yieldResults();
+/** @var \Ytake\PrestoClient\QueryResult $row */
+foreach ($result as $row) {
+    foreach ($row->yieldData() as $yieldRow) {
+        if ($yieldRow instanceof \Ytake\PrestoClient\FixData) {
+            var_dump($yieldRow->offsetGet('column_name'), $yieldRow['column_name']);
+        }
+    }
+}
+```
+
+### Array Keys
+
+```php
+<?php
+
+$client = new \Ytake\PrestoClient\StatementClient(
+    new \Ytake\PrestoClient\ClientSession('http://localhost:8080/', 'acme'),
+    'SELECT * FROM acme.acme.acme'
+);
+$resultSession = new \Ytake\PrestoClient\ResultsSession($client);
+$result = $resultSession->execute()->yieldResults();
+/** @var \Ytake\PrestoClient\QueryResult $row */
+foreach ($result as $row) {
+    /** @var array $item */
+    foreach ($row->yieldDataArray() as $item) {
+        if (!is_null($item)) {
+            var_dump($item);
+        }
+    }
+}
+```
+
+### Mapping Class
+
+```php
+<?php
+
+class Testing
+{
+    private $_key;
+
+    private $_value;
+}
+
+$client = new \Ytake\PrestoClient\StatementClient(
+    new \Ytake\PrestoClient\ClientSession('http://localhost:8080/', 'acme'),
+    'SELECT * FROM acme.acme.acme'
+);
+$resultSession = new \Ytake\PrestoClient\ResultsSession($client);
+$result = $resultSession->execute()->yieldResults();
+/** @var \Ytake\PrestoClient\QueryResult $row */
+foreach ($result as $row) {
+    foreach($row->yieldObject(Testing::class) as $object) {
+        if ($object instanceof Testing) {
+            var_dump($object);
+        }
+    }
+}
+```
+
