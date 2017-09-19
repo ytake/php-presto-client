@@ -156,9 +156,9 @@ final class QueryResult
         }
         $column = $this->getColumns();
         $columnCount = count($column);
-        $reflectionClass = new \ReflectionClass($fetchClassName);
-        $newInstance = $reflectionClass->newInstanceWithoutConstructor();
         foreach ($this->data as $data) {
+            $reflectionClass = new \ReflectionClass($fetchClassName);
+            $newInstance = $reflectionClass->newInstanceWithoutConstructor();
             for ($i = 0; $i < $columnCount; $i++) {
                 if ($reflectionClass->hasProperty($column[$i]->getName())) {
                     $property = $reflectionClass->getProperty($column[$i]->getName());
