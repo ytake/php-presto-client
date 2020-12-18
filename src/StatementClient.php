@@ -91,10 +91,13 @@ class StatementClient
 
     private function prepareRequest()
     {
-        $this->headers = [
-            PrestoHeaders::PRESTO_USER => $this->session->getUser(),
-            'User-Agent'               => $this->session->getSource() . '/' . PrestoHeaders::VERSION,
-        ];
+        $this->headers = array_merge(
+            [
+                PrestoHeaders::PRESTO_USER => $this->session->getUser(),
+                'User-Agent'               => $this->session->getSource() . '/' . PrestoHeaders::VERSION
+            ],
+            $this->session->getHeader()
+        );
     }
 
     /**
@@ -336,7 +339,7 @@ class StatementClient
             }
             $attempts++;
             try {
-                $response = $this->client->get($nextUri);
+                $response = $this->client->get($nextUri, ['headers' => $this->headers]);
                 if ($response->getStatusCode() === StatusCodeInterface::STATUS_OK) {
                     $this->queryResult->set($response->getBody()->getContents());
 
