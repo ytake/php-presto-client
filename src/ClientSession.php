@@ -41,6 +41,9 @@ class ClientSession
     protected $schema = 'default';
 
     /** @var string */
+    protected $header = [];
+
+    /** @var string */
     protected $user = 'presto';
 
     /** @var string */
@@ -70,6 +73,14 @@ class ClientSession
     public function setSchema(string $schema)
     {
         $this->schema = $schema;
+    }
+
+    /**
+     * @param array $header
+     */
+    public function setHeader(array $header)
+    {
+        $this->header = $header;
     }
 
     /**
@@ -142,6 +153,14 @@ class ClientSession
     public function getCatalog(): string
     {
         return $this->catalog;
+    }
+
+    /**
+     * @return array
+     */
+    public function getHeader(): array
+    {
+        return $this->header;
     }
 
     /**
